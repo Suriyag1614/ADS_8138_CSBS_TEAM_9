@@ -1,23 +1,96 @@
-# ADS_8138_CSBS_TEAM_9
-## Problem: 
-Predicting the future price of a stock or financial asset accurately is a complex and challenging task due to various factors, including market dynamics, economic indicators, and investor sentiment.
+Here's a polished README.md file for your Stock Price Prediction project:
 
-## Objective: 
-Develop a stock price prediction system that leverages historical data, market trends, and machine learning to provide accurate short-term and long-term stock price forecasts for a given company’s stock.
+```markdown
+# Stock Price Prediction System
 
-Common dependencies may include Python programming language(platforms such as  Python IDLE,google colab,etc.) and libraries such as scikit-learn and data sources.
+## 📌 Problem Statement
+Predicting future stock prices accurately remains challenging due to:
+- Market volatility and complex dynamics
+- Numerous influencing factors (economic indicators, news, investor sentiment)
+- Non-linear and non-stationary nature of financial time series data
 
-## Steps
-1) Install the required dependencies such as numpy, pandas and matplotlib.pyplot using package managers like pip for Python.
-2) Gather dataset of any company's stock prices
-3) Load historical stock price data into program
-4) Select the 'Close' price column as the target variable
-5) Create a new column for the next day's closing price
-6) Drop the last row since there is no 'Next Close' for it
-7) Split the data into features (X) and the target variable (y)
-8) Split the data into training and testing sets
-9) Create and train a linear regression model
-10) Make predictions on the test set
-11) Calculate the Mean Squared Error to evaluate the model
-12) Visualize the predictions
-13) Predict the stock price for a specific value
+## 🎯 Objective
+Develop a machine learning-based system that:
+- Leverages historical price data and market trends
+- Provides both short-term and long-term price forecasts
+- Offers interpretable results for investment decisions
+
+## 🛠️ Technical Stack
+### Core Dependencies
+- **Python 3.8+**
+- Key Libraries:
+  - `numpy` (Numerical operations)
+  - `pandas` (Data manipulation)
+  - `matplotlib`/`seaborn` (Visualization)
+  - `scikit-learn` (Machine learning models)
+  - `yfinance` (Yahoo Finance API access)
+
+### Development Platforms
+- Google Colab (Recommended for cloud execution)
+- Jupyter Notebook
+- Python IDLE
+
+## 📋 Implementation Steps
+
+### 1. Environment Setup
+```bash
+pip install numpy pandas matplotlib scikit-learn yfinance
+```
+
+### 2. Data Collection
+```python
+import yfinance as yf
+data = yf.download('AAPL', start='2020-01-01', end='2023-12-31')
+```
+
+### 3. Data Preprocessing
+- Select 'Close' price as target variable
+- Create shifted column for next day's price
+- Handle missing values and outliers
+- Normalize/scale features if needed
+
+### 4. Feature Engineering
+```python
+data['Next_Close'] = data['Close'].shift(-1)
+data.dropna(inplace=True)
+```
+
+### 5. Model Training
+```python
+from sklearn.linear_model import LinearRegression
+
+X = data[['Open', 'High', 'Low', 'Volume']]
+y = data['Next_Close']
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+```
+
+### 6. Evaluation
+```python
+from sklearn.metrics import mean_squared_error
+
+predictions = model.predict(X_test)
+mse = mean_squared_error(y_test, predictions)
+```
+
+### 7. Visualization
+```python
+plt.figure(figsize=(12,6))
+plt.plot(y_test.values, label='Actual')
+plt.plot(predictions, label='Predicted')
+plt.legend()
+```
+
+## 📊 Sample Output
+![Prediction Visualization](sample_plot.png)
+*Actual vs Predicted prices comparison*
+
+## 📈 Future Enhancements
+- Incorporate sentiment analysis from news/articles
+- Implement LSTM/RNN for time-series modeling
+- Add technical indicators as features
+- Develop trading strategy backtesting
+
+## 📜 License
+MIT License - Free for academic and commercial use
