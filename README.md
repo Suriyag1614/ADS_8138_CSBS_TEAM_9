@@ -1,6 +1,4 @@
-Here's a polished README.md file for your Stock Price Prediction project:
 
-```markdown
 # Stock Price Prediction System
 
 ## 📌 Problem Statement
